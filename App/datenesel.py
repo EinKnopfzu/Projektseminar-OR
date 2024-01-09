@@ -2,7 +2,7 @@ import csv
 import openai
 
 # Konfiguration für den OpenAI GPT-3.5 Aufruf
-openai.api_key = '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'
+openai.api_key = 'sk-WaW2BdK32wLVmLnknjpdT3BlbkFJEwENS02Cp3Vyvt5e4zkyyy'
 model = 'gpt-3.5-turbo-1106'
 temperature = 1
 max_length = 2048
