@@ -1,10 +1,10 @@
 import csv
 import json
-
+import logging
 import openai
 
 # Konfiguration für den OpenAI GPT-3.5 Aufruf
-openai.api_key = 'sk-WaW2BdK32wLVmLnknjpdT3BlbkFJEwENS02Cp3Vyvt5e4zkyyy'
+openai.api_key = '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'
 model = 'gpt-3.5-turbo-1106'
 temperature = 1
 max_length = 2048
@@ -34,6 +34,8 @@ def openai_requests(datenesel, config):
             presence_penalty=presence_penalty
         )
 
+        logging.info('Final Request Title: ' + response.choices[0].message['content'])
+
         outputs.append(['Title?', response.choices[0].message['content']])
 
     if (config['DescriptionLong?'] == 1):
@@ -52,6 +54,8 @@ def openai_requests(datenesel, config):
             frequency_penalty=frequency_penalty,
             presence_penalty=presence_penalty
         )
+
+        logging.info('Final Request DescriptionLong: ' + response.choices[0].message['content'])
 
         outputs.append(['DescriptionLong?', response.choices[0].message['content']])
 
@@ -72,6 +76,8 @@ def openai_requests(datenesel, config):
             presence_penalty=presence_penalty
         )
 
+        logging.info('Final Request SalesArguments: ' + response.choices[0].message['content'])
+
         outputs.append(['SalesArguments?', response.choices[0].message['content']])
 
     if (config['BulletPoints?'] == 1):
@@ -90,6 +96,8 @@ def openai_requests(datenesel, config):
             frequency_penalty=frequency_penalty,
             presence_penalty=presence_penalty
         )
+
+        logging.info('Final Request BulletPoints: ' + response.choices[0].message['content'])
 
         outputs.append(['BulletPoints?', response.choices[0].message['content']])
 
@@ -110,6 +118,11 @@ def openai_requests(datenesel, config):
             presence_penalty=presence_penalty
         )
 
+        logging.info('Final Request xxx: ' + response.choices[0].message['content'])
+
+
         outputs.append(['xxx', response.choices[0].message['content']])
+
+    logging.info('Final Request all_combined: ' + str(outputs))
 
     return json.dumps(outputs)

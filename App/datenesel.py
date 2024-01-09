@@ -1,8 +1,9 @@
 import csv
 import openai
+import logging
 
 # Konfiguration für den OpenAI GPT-3.5 Aufruf
-openai.api_key = 'sk-WaW2BdK32wLVmLnknjpdT3BlbkFJEwENS02Cp3Vyvt5e4zkyyy'
+openai.api_key = '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'
 model = 'gpt-3.5-turbo-1106'
 temperature = 1
 max_length = 2048
@@ -32,8 +33,12 @@ def generate_product_features(user_input):
             presence_penalty=presence_penalty
         )
         combined_outputs.append(response.choices[0].message['content'])
-    
-    return " / ".join(combined_outputs)
+
+    output = " / ".join(combined_outputs)
+
+    logging.info('Datenesel I: ' + output)
+
+    return output
 
 def refine_product_features(combined_outputs):
     system_prompt = "Du bist ein Spezialist für E-Commerce und SEO. Du hast Expertise im Extrahieren und Abstrahieren von Produktmerkmalen, welche entscheidend für die Kaufentscheidung sind, welche helfen, die Vorzüge eines Produktes zu erkennen, und welche die Benutzererfahrung hervorheben. Du arbeitest marketing- und zielgruppenorientiert. Du antwortest immer in folgendem Format: 'Produktmerkmal 1 / Produktmerkmal 2 / [...] / Produktmerkmal x'."
@@ -51,5 +56,6 @@ def refine_product_features(combined_outputs):
         frequency_penalty=frequency_penalty,
         presence_penalty=presence_penalty
     )
+    logging.info('Datenesel II (Finished): ' + response.choices[0].message['content'])
     return response.choices[0].message['content']
 
