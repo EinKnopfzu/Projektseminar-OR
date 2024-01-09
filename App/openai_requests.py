@@ -4,7 +4,7 @@ import logging
 import openai
 
 # Konfiguration für den OpenAI GPT-3.5 Aufruf
-openai.api_key = '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'
+openai.api_key = ''
 model = 'gpt-3.5-turbo-1106'
 temperature = 1
 max_length = 2048
