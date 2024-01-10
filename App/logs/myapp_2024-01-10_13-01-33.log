@@ -1,0 +1,20 @@
+INFO:werkzeug:[31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on http://127.0.0.1:5000
+INFO:werkzeug:[33mPress CTRL+C to quit[0m
+INFO:werkzeug: * Restarting with stat
+WARNING:werkzeug: * Debugger is active!
+INFO:werkzeug: * Debugger PIN: 883-143-197
+INFO:werkzeug:127.0.0.1 - - [10/Jan/2024 13:02:04] "GET /status HTTP/1.1" 200 -
+INFO:root:Post-Config: {'TitlePlain': 'Wandlampe', 'DeliveryContents': ['Lampenkörper', 'Bedienungsanleitung', 'Kabel'], 'UserInstructions': ['10cm x 30cm', 'nicht für Kleinkindergeeignet', 'etc...'], 'UserCustomization': 'Besonders freundlicher Output', 'Title?': 1, 'DescriptionLong?': 0, 'SalesArguments?': 1, 'BulletPoints?': 1, 'xxx?': 0}
+INFO:werkzeug:127.0.0.1 - - [10/Jan/2024 13:02:09] "GET /status HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [10/Jan/2024 13:02:11] "GET /status HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [10/Jan/2024 13:02:12] "GET /status HTTP/1.1" 200 -
+INFO:openai:error_code=invalid_api_key error_message='Incorrect API key provided: sk-Xd8bl***************************************CQus. You can find your API key at https://platform.openai.com/account/api-keys.' error_param=None error_type=invalid_request_error message='OpenAI API error received' stream_error=False
+INFO:werkzeug:127.0.0.1 - - [10/Jan/2024 13:02:12] "[35m[1mPOST /generate HTTP/1.1[0m" 500 -
+INFO:werkzeug:127.0.0.1 - - [10/Jan/2024 13:02:13] "GET /status HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [10/Jan/2024 13:02:15] "GET /status HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [10/Jan/2024 13:02:16] "GET /status HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [10/Jan/2024 13:02:17] "GET /status HTTP/1.1" 200 -
+INFO:werkzeug: * Detected change in 'C:\\Users\\Gero\\OneDrive - student.uni-halle.de\\Master Uni Halle\\WS23-24\\OR Proejektsemianr\\backend\\backend-venv\\App\\datenesel.py', reloading
+INFO:werkzeug: * Restarting with stat
+INFO:root:Flaskserver gestartet

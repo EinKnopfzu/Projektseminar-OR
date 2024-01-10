@@ -2,18 +2,15 @@ import csv
 import json
 import logging
 import openai
+import routes
+from config import api_key, model, temperature, max_length, top_p, frequency_penalty, presence_penalty
+# Konfiguration für den OpenAI GPT-3.5 Aufruf in config
+openai.api_key = api_key
 
-# Konfiguration für den OpenAI GPT-3.5 Aufruf
-openai.api_key = ''
-model = 'gpt-3.5-turbo-1106'
-temperature = 1
-max_length = 2048
-top_p = 1
-frequency_penalty = 0
-presence_penalty = 0
 
 def openai_requests(datenesel, config):
 
+    routes.status_global = "Mainrequests started"
     outputs = []
 
     if (config['Title?'] == 1):
@@ -124,5 +121,7 @@ def openai_requests(datenesel, config):
         outputs.append(['xxx', response.choices[0].message['content']])
 
     logging.info('Final Request all_combined: ' + str(outputs))
+
+    routes.status_global = "Mainrequests finished"
 
     return json.dumps(outputs)

@@ -1,15 +1,11 @@
 import csv
 import openai
 import logging
+import routes
+from config import api_key, model, temperature, max_length, top_p, frequency_penalty, presence_penalty
+# Konfiguration für den OpenAI GPT-3.5 Aufruf in config
+openai.api_key = api_key
 
-# Konfiguration für den OpenAI GPT-3.5 Aufruf
-openai.api_key = ''
-model = 'gpt-3.5-turbo-1106'
-temperature = 1
-max_length = 2048
-top_p = 1
-frequency_penalty = 0
-presence_penalty = 0
 
 def generate_product_features(user_input):
 
@@ -17,7 +13,9 @@ def generate_product_features(user_input):
 
     system_prompt = "Du bist ein Spezialist für E-Commerce und SEO. Du hast Expertise im Extrahieren und Abstrahieren von Produktmerkmalen, welche entscheidend für die Kaufentscheidung sind, welche helfen, die Vorzüge eines Produktes zu erkennen, und welche die Benutzererfahrung hervorheben. Du arbeitest marketing- und zielgruppenorientiert. Du antwortest immer in folgendem Format: 'Produktmerkmal 1 / Produktmerkmal 2 / [...] / Produktmerkmal x'."
     user_prompt = f"Extrahiere und abstrahiere ca. 10 Produktmerkmale anhand der folgenden Produktdaten:\n\n'{line}'\n\nIdentifiziere attraktive, verkaufsfördernde Merkmale, die für diese Produktart typisch sind, ohne jedoch spezifische Funktionen oder Eigenschaften zu erfinden, die nicht im Datensatz erwähnt werden. Stelle sicher, dass die Merkmale zwar einer subjektiven, positiven Beurteilung ähneln, aber realistisch und in Übereinstimmung mit den gegebenen Produktdaten sind. Vermeide übertriebene Annahmen oder Ergänzungen, die kaum aus den gegebenen Informationen abgeleitet werden können.\n\nAntworte im Format 'Produktmerkmal 1 / Produktmerkmal 2 / ... / Produktmerkmal x'."
-    
+
+    routes.status_global = "Prerequests started"
+
     combined_outputs = []
     for _ in range(3):
         response = openai.ChatCompletion.create(
@@ -57,5 +55,7 @@ def refine_product_features(combined_outputs):
         presence_penalty=presence_penalty
     )
     logging.info('Datenesel II (Finished): ' + response.choices[0].message['content'])
+    routes.status_global = "Prerequests finished"
+
     return response.choices[0].message['content']
 

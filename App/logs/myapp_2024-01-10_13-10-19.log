@@ -1,0 +1,44 @@
+INFO:werkzeug:[31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on http://127.0.0.1:5000
+INFO:werkzeug:[33mPress CTRL+C to quit[0m
+INFO:werkzeug: * Restarting with stat
+WARNING:werkzeug: * Debugger is active!
+INFO:werkzeug: * Debugger PIN: 883-143-197
+INFO:root:Post-Config: {'TitlePlain': 'Wandlampe', 'DeliveryContents': ['Lampenkörper', 'Bedienungsanleitung', 'Kabel'], 'UserInstructions': ['10cm x 30cm', 'nicht für Kleinkindergeeignet', 'etc...'], 'UserCustomization': 'Besonders freundlicher Output', 'Title?': 1, 'DescriptionLong?': 0, 'SalesArguments?': 1, 'BulletPoints?': 1, 'xxx?': 0}
+INFO:werkzeug:127.0.0.1 - - [10/Jan/2024 13:10:37] "GET /status HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [10/Jan/2024 13:10:38] "GET /status HTTP/1.1" 200 -
+INFO:root:Datenesel I: Die Merkmale der Wandlampe sind: Lieferumfang: Lampenkörper / Bedienungsanleitung / Kabel / Größe: 10cm x 30cm / Sicherheitshinweis: nicht für Kleinkinder geeignet. / Die abstrahierten Produktmerkmale basierend auf den gegebenen Produktdaten könnten sein: 
+1. Elegantes Design 
+2. Inklusive Lampenkörper 
+3. Bedienungsanleitung enthalten 
+4. Kabel im Lieferumfang 
+5. Kompakte Größe (10cm x 30cm) 
+6. Sicherheitsmerkmal: Nicht für Kleinkinder geeignet 
+7. Moderne Optik 
+8. Einfache Installation 
+9. Vielseitige Anwendungsmöglichkeiten 
+10. Qualitativ hochwertige Materialien / Klassisches, elegantes Design / Inklusive Lampenkörper und Kabel / Kompakte Größe von 10 cm x 30 cm / Benutzerfreundliche Bedienungsanleitung / Stilvolles Accessoire für jeden Raum / Sicherheitsmerkmal: Nicht für Kleinkindergeeignet / Einfache Installation an der Wand / Modernes und zeitloses Design / Geeignet für verschiedene Einrichtungsstile / Hochwertige Verarbeitung und Materialien.
+INFO:root:Datenesel II (Finished): Elegantes, klassisches Design / Inklusive Lampenkörper und Kabel / Kompakte Größe von 10 cm x 30 cm / Benutzerfreundliche Bedienungsanleitung / Stilvolles Accessoire für jeden Raum / Sicherheitsmerkmal: Nicht für Kleinkinder geeignet / Einfache Installation an der Wand / Modernes und zeitloses Design / Geeignet für verschiedene Einrichtungsstile / Hochwertige Verarbeitung und Materialien.
+INFO:root:Final Request Title: "Zeitlose Eleganz: Die perfekte Wandlampe für stilvolle Interieurs"
+INFO:root:Final Request SalesArguments: 1. Mit seinem eleganten und klassischen Design ist diese Lampe ein zeitloses Accessoire für jeden Raum.
+2. Die kompakte Größe von 10 cm x 30 cm macht sie zu einem platzsparenden und dennoch stilvollen Beleuchtungselement.
+3. Die hochwertige Verarbeitung und Materialien garantieren Langlebigkeit und ansprechende Optik.
+4. Inklusive Lampenkörper und Kabel - alles, was Sie für eine einfache Installation an der Wand benötigen.
+5. Die benutzerfreundliche Bedienungsanleitung macht die Inbetriebnahme zu einem Kinderspiel.
+6. Modernes Design, das sich nahtlos in verschiedene Einrichtungsstile einfügt.
+7. Bitte beachten Sie das Sicherheitsmerkmal: Die Lampe ist nicht für Kleinkinder geeignet, was für zusätzliche Sicherheit sorgt.
+INFO:root:Final Request BulletPoints: - Elegantes, klassisches Design
+- Inklusive Lampenkörper und Kabel
+- Kompakte Größe von 10 cm x 30 cm
+- Benutzerfreundliche Bedienungsanleitung
+- Stilvolles Accessoire für jeden Raum
+- Sicherheitsmerkmal: Nicht für Kleinkinder geeignet
+- Einfache Installation an der Wand
+- Modernes und zeitloses Design
+- Geeignet für verschiedene Einrichtungsstile
+- Hochwertige Verarbeitung und Materialien
+INFO:root:Final Request all_combined: [['Title?', '"Zeitlose Eleganz: Die perfekte Wandlampe für stilvolle Interieurs"'], ['SalesArguments?', '1. Mit seinem eleganten und klassischen Design ist diese Lampe ein zeitloses Accessoire für jeden Raum.\n2. Die kompakte Größe von 10 cm x 30 cm macht sie zu einem platzsparenden und dennoch stilvollen Beleuchtungselement.\n3. Die hochwertige Verarbeitung und Materialien garantieren Langlebigkeit und ansprechende Optik.\n4. Inklusive Lampenkörper und Kabel - alles, was Sie für eine einfache Installation an der Wand benötigen.\n5. Die benutzerfreundliche Bedienungsanleitung macht die Inbetriebnahme zu einem Kinderspiel.\n6. Modernes Design, das sich nahtlos in verschiedene Einrichtungsstile einfügt.\n7. Bitte beachten Sie das Sicherheitsmerkmal: Die Lampe ist nicht für Kleinkinder geeignet, was für zusätzliche Sicherheit sorgt.'], ['BulletPoints?', '- Elegantes, klassisches Design\n- Inklusive Lampenkörper und Kabel\n- Kompakte Größe von 10 cm x 30 cm\n- Benutzerfreundliche Bedienungsanleitung\n- Stilvolles Accessoire für jeden Raum\n- Sicherheitsmerkmal: Nicht für Kleinkinder geeignet\n- Einfache Installation an der Wand\n- Modernes und zeitloses Design\n- Geeignet für verschiedene Einrichtungsstile\n- Hochwertige Verarbeitung und Materialien']]
+INFO:werkzeug:127.0.0.1 - - [10/Jan/2024 13:11:05] "POST /generate HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [10/Jan/2024 13:11:13] "GET /status HTTP/1.1" 200 -
+INFO:root:Flaskserver gestartet
+INFO:root:Flaskserver gestartet
