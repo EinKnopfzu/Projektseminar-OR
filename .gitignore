@@ -1,0 +1,4 @@
+App/logs/*
+App/__pycache__
+App/__pycache__/
+App/config.py
