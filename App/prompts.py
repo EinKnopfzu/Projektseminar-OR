@@ -1,5 +1,6 @@
 """
 In diesem File werden die Prompts bzw. Prompt Teile für die Abfragen verwaltet!
+Bei User Prompts mit Part1 und Part2 werden die Daten zwischen die beiden Parts gefügt.
 #######################################################################################################################################################################################################
 """
 """
