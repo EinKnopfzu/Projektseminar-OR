@@ -99,8 +99,8 @@ export class AppComponent {
 
     let httpBody = {
       "TitlePlain": this.input.product_info.TitlePlain,
-      "DeliveryContents": [this.input.product_info.DeliveryContents],
-      "UserInstructions": [this.input.product_info.UserInstructions],
+      "DeliveryContents": this.input.product_info.DeliveryContents.split(',').map(el => el.trim()),
+      "UserInstructions": this.input.product_info.UserInstructions.split(',').map(el => el.trim()),
       "UserCustomization": this.input.product_info.UserCustomization,
 
       "Title?": this.input.output_settings.Title,
