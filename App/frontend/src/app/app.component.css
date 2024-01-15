@@ -239,8 +239,15 @@ body {
 }
 
 .clipboard {
-    float: right;
+    position: absolute;
+    bottom: 0;
+    right: 0;
     cursor: pointer;
     padding: 0px 10px 4px 10px;
-    margin-right: -12px;
+    margin-right: -1px;
+    margin-bottom: -1px;
+}
+
+.clipboard:active {
+    opacity: 50%;
 }
