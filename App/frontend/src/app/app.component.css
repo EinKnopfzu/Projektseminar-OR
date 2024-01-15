@@ -38,6 +38,11 @@ body {
     border-bottom-left-radius: 0;
 }
 
+/*
+    ng-bootstrap nav
+    https://ng-bootstrap.github.io/#/components/nav/api
+*/
+
 .nav-tabs {
     margin-top: 20px;
 }

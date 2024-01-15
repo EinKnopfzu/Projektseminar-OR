@@ -89,7 +89,7 @@
   <button class="btn btn-primary w-100 py-2 shadow" (click)="generate_LLM_Response()">Produktbeschreibung generieren</button>
 
   <!-- product llm chat navigation -->
-  <ul ngbNav #nav="ngbNav" [(activeId)]="active" class="nav-tabs">
+  <ul ngbNav #nav="ngbNav" [(activeId)]="active" [animation]="false" class="nav-tabs">
     <!-- ngFor each product object in 'product_info_array' -->
     <ng-template ngFor let-product_object [ngForOf]="product_info_array" style="display: contents">
       <li [ngbNavItem]="product_object.product_id">
