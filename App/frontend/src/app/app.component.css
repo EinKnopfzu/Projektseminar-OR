@@ -38,6 +38,10 @@ body {
     border-bottom-left-radius: 0;
 }
 
+.nav-tabs {
+    margin-top: 20px;
+}
+
 
 /*
     Chat CSS
@@ -51,9 +55,7 @@ body {
     position: relative;
     border-radius: 3px;
     background: #27292c;
-    border-top: 3px solid var(--main-bg-color);
     border-bottom: 3px solid #27292c;
-    margin-top: 20px;
     width: 100%;
     box-shadow: 0 1px 1px rgba(0,0,0,0.1);
 }
