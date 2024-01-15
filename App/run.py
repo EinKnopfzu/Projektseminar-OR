@@ -1,4 +1,5 @@
 from flask import Flask
+from flask_cors import CORS
 from routes import create_routes
 from remove_old_logs import remove_old_logs
 import logging
@@ -13,6 +14,7 @@ def main():
     logging.basicConfig(filename=f"logs\\myapp_{current_time}.log", level=logging.INFO)
 
     app = Flask(__name__)
+    CORS(app)
 
     create_routes(app)
     app.run(debug=True)
