@@ -69,6 +69,25 @@ export class AppComponent {
     }
   }
 
+  // function to reset input settings
+  reset_input() {
+    this.input = {
+      product_info: {
+        "TitlePlain": "",
+        "DeliveryContents": "",
+        "UserInstructions": "",
+        "UserCustomization": ""
+      },
+      output_settings: {
+        "Title": false,
+        "DescriptionLong": false,
+        "SalesArguments": false,
+        "BulletPoints": false,
+        "xxx": false
+      }
+    }
+  }
+
   // initial call to llm
   // generates a response for each product id that was selected in settings
   generate_LLM_Response() {

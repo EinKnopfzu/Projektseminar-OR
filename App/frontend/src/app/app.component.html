@@ -62,8 +62,10 @@
             </div>
             <!-- http settings -->
             <div class="col">
-              <button class="btn btn-secondary w-100 py-2 shadow" (click)="set_std_input()">Standardwerte setzen</button>
-              <div class="form-check" style="margin-top: 10px;">
+              <button class="btn btn-secondary py-2 shadow float-start" style="width: 49%;" (click)="set_std_input()">Standardwerte setzen</button>
+              <button class="btn btn-secondary py-2 shadow float-end" style="width: 49%;" (click)="reset_input()">Einstellungen zurücksetzen</button>
+              <br>
+              <div class="form-check float-start" style="margin-top: 10px;">
                 <input [(ngModel)]="dummy_http_request" class="form-check-input" type="checkbox" name="ProductionBool">
                 <label class="form-check-label">Dummy HTTP Request</label>
               </div>
