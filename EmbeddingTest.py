@@ -1,7 +1,6 @@
 import csv
 import openai
 import tiktoken # kann wahrscheinlich weg (nur für Berechnung der Kosten)
-import random
 import numpy as np
 
 openai.api_key = 'YOLO'
@@ -27,35 +26,42 @@ def num_tokens_from_string(string: str, encoding_name: str = "cl100k_base") -> i
 
 def main():
     input_file_path = 'DatenDescriptionLongShops1-616.csv'
-
+        
     with open(input_file_path, mode='r', encoding='utf-8') as file:
         reader = csv.DictReader(file)
         rows = list(reader)
 
-    selected_rows = random.sample(rows, 10) # die Anzahl je nach gewünschter Ähnlichkeit der Few-Shot-Beispiele zum Datenesel anpassen
     similarities = []
     total_cost = 0 # kann wahrscheinlich weg (nur für Berechnung der Kosten)
     
-    for row in selected_rows:
+    for row in rows:
         text = row['User'].replace('DescriptionLongShops für // ', '')
         embedding = get_embedding(text)
-        
+        row['Embedding'] = embedding
+
         num_tokens = num_tokens_from_string(text) # kann wahrscheinlich weg (nur für Berechnung der Kosten)
         price_per_token = 0.0000001 # kann wahrscheinlich weg (nur für Berechnung der Kosten)
         cost = num_tokens * price_per_token # kann wahrscheinlich weg (nur für Berechnung der Kosten)
         total_cost += cost # kann wahrscheinlich weg (nur für Berechnung der Kosten)
-
+        
         similarity = cosine_similarity(embedding, predefined_embedding)
         text_start = text.split(" //")[0] if " //" in text else text
         similarities.append((text_start, similarity))
-        # print(f"Text: {text}\nÄhnlichkeit mit vordefiniertem Text: {similarity}\nAnzahl der Tokens: {num_tokens}\nKosten für diesen Aufruf: ${cost:.8f}\nEmbedding: {embedding}\n")
+        print(f"Text: {text}\nÄhnlichkeit mit vordefiniertem Text: {similarity}\nAnzahl der Tokens: {num_tokens}\nKosten für diesen Aufruf: ${cost:.8f}\n")
+
+    with open(input_file_path, mode='w', encoding='utf-8', newline='') as file:
+        fieldnames = reader.fieldnames + ['Embedding']
+        writer = csv.DictWriter(file, fieldnames=fieldnames)
+
+        writer.writeheader()
+        writer.writerows(rows)
 
     similarities.sort(key=lambda x: x[1], reverse=True)
 
     print(f"Gesamtkosten für alle Abfragen insg.: ${total_cost:.8f}")
 
-    print("Ranking der Ähnlichkeiten:")
-    for i, (text, similarity) in enumerate(similarities, start=1):
+    print("Top 10 der höchsten Ähnlichkeiten:")
+    for i, (text, similarity) in enumerate(similarities[:10], start=1):
         print(f"{i}.) {text}, {similarity:.8f}")
 
 if __name__ == '__main__':
