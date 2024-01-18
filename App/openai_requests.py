@@ -5,152 +5,58 @@ import openai
 import routes
 import prompts
 from config import api_key, model, temperature, max_length, top_p, frequency_penalty, presence_penalty
+from get_embedding import embedding
 # Konfiguration für den OpenAI GPT-3.5 Aufruf in config
 openai.api_key = api_key
 
 
 def openai_requests(datenesel, config):
 
-    max_operations = get_count(config)
-    counter = 0
+    temperature = config["llm_settings"]["temperature"]
+    max_tokens = config["llm_settings"]["max_tokens"]
+    top_p = config["llm_settings"]["top_p"]
+    frequency_penalty = config["llm_settings"]["frequency_penalty"]
+    presence_penalty = config["llm_settings"]["presence_penalty"]
+
     outputs = []
+    #set settings for Openai API calls
 
-    counter = set_counter(counter, max_operations)
+    for key in config["generate_selection"].keys():
 
-    if (config['Title?'] == 1):
+        if (config["generate_selection"][key] == True):
+            routes.status_global["Hauptabfrage " + key] = True  # status update
 
-        system_prompt = prompts.system_prompt_3
-        user_prompt = prompts.user_prompt_3 + datenesel
+            system_prompt = prompts.hauptprompts["system_" + key]
+            user_prompt = prompts.hauptprompts["user_" + key] + datenesel
 
-        response = openai.ChatCompletion.create(
-            model=model,
-            messages=[
-                {"role": "system", "content": system_prompt},
-                {"role": "user", "content": user_prompt}
-            ],
-            temperature=temperature,
-            max_tokens=max_length,
-            top_p=top_p,
-            frequency_penalty=frequency_penalty,
-            presence_penalty=presence_penalty
-        )
+            if key == "DescriptionLongShops":
+                user_prompt += embedding(datenesel)
 
-        logging.info('Final Request Title: ' + response.choices[0].message['content'])
-        outputs.append(['Title?', response.choices[0].message['content']])
-        counter = set_counter(counter, max_operations)
+            response = openai.ChatCompletion.create(
+                model=model,
+                messages=[
+                    {"role": "system", "content": system_prompt},
+                    {"role": "user", "content": user_prompt}
+                ],
+                temperature=temperature,
+                max_tokens=max_length,
+                top_p=top_p,
+                frequency_penalty=frequency_penalty,
+                presence_penalty=presence_penalty
+            )
 
-    if (config['DescriptionLong?'] == 1):
-        system_prompt = prompts.system_prompt_4
-        user_prompt = prompts.user_prompt_4 + datenesel
+            logging.info('Hauptabfrage ' + key + ': ' + response.choices[0].message['content'])
 
-        response = openai.ChatCompletion.create(
-            model=model,
-            messages=[
-                {"role": "system", "content": system_prompt},
-                {"role": "user", "content": user_prompt}
-            ],
-            temperature=temperature,
-            max_tokens=max_length,
-            top_p=top_p,
-            frequency_penalty=frequency_penalty,
-            presence_penalty=presence_penalty
-        )
+            outputs.append({"typ" : key,
+                            "prompt" : user_prompt,
+                            "response" : response.choices[0].message['content']
+                        })
+            routes.status_global["Antwort " + key] = True        # status update
 
-        logging.info('Final Request DescriptionLong: ' + response.choices[0].message['content'])
-        outputs.append(['DescriptionLong?', response.choices[0].message['content']])
-        counter = set_counter(counter, max_operations)
-
-    if (config['SalesArguments?'] == 1):
-        system_prompt = prompts.system_prompt_5
-        user_prompt = prompts.user_prompt_5 + datenesel
-
-        response = openai.ChatCompletion.create(
-            model=model,
-            messages=[
-                {"role": "system", "content": system_prompt},
-                {"role": "user", "content": user_prompt}
-            ],
-            temperature=temperature,
-            max_tokens=max_length,
-            top_p=top_p,
-            frequency_penalty=frequency_penalty,
-            presence_penalty=presence_penalty
-        )
-
-        logging.info('Final Request SalesArguments: ' + response.choices[0].message['content'])
-        outputs.append(['SalesArguments?', response.choices[0].message['content']])
-        counter = set_counter(counter, max_operations)
-
-    if (config['BulletPoints?'] == 1):
-        system_prompt = prompts.system_prompt_6
-        user_prompt = prompts.user_prompt_6 + datenesel
-
-        response = openai.ChatCompletion.create(
-            model=model,
-            messages=[
-                {"role": "system", "content": system_prompt},
-                {"role": "user", "content": user_prompt}
-            ],
-            temperature=temperature,
-            max_tokens=max_length,
-            top_p=top_p,
-            frequency_penalty=frequency_penalty,
-            presence_penalty=presence_penalty
-        )
-
-        logging.info('Final Request BulletPoints: ' + response.choices[0].message['content'])
-        outputs.append(['BulletPoints?', response.choices[0].message['content']])
-        counter = set_counter(counter, max_operations)
-
-
-    if (config['xxx?'] == 1):
-        system_prompt = prompts.system_prompt_7
-        user_prompt = prompts.user_prompt_7 + datenesel
-
-        response = openai.ChatCompletion.create(
-            model=model,
-            messages=[
-                {"role": "system", "content": system_prompt},
-                {"role": "user", "content": user_prompt}
-            ],
-            temperature=temperature,
-            max_tokens=max_length,
-            top_p=top_p,
-            frequency_penalty=frequency_penalty,
-            presence_penalty=presence_penalty
-        )
-
-        logging.info('Final Request xxx: ' + response.choices[0].message['content'])
-        outputs.append(['xxx', response.choices[0].message['content']])
-        counter = set_counter(counter, max_operations)
-
-    logging.info('Final Request all_combined: ' + str(outputs))
-
-    routes.status_global = "Mainrequests finished"
+        else:
+            routes.status_global["Hauptabfrage " + key] = False  # status update
+            routes.status_global["Antwort " + key] = False
+            logging.info('Hauptabfrage ' + key + ': not selected')
 
     return json.dumps(outputs)
 
-
-def get_count(config):
-    count_operations = 0
-
-    if config['Title?'] == 1:
-        count_operations += 1
-
-    if config['DescriptionLong?'] == 1:
-        count_operations += 1
-
-    if config['SalesArguments?'] == 1:
-        count_operations += 1
-
-    if config['BulletPoints?'] == 1:
-        count_operations += 1
-
-    if config['xxx?'] == 1:
-        count_operations += 1
-
-    return count_operations
-
-def set_counter(counter, max_operations):
-    routes.status_global = "Mainrequests (" + str(counter) + "/" + str(max_operations) + ")"
-    return counter + 1
