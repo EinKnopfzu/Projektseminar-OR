@@ -29,8 +29,9 @@ def openai_requests(datenesel, config):
             system_prompt = prompts.hauptprompts["system_" + key]
             user_prompt = prompts.hauptprompts["user_" + key] + datenesel
 
-            if key == "DescriptionLongShops":
-                user_prompt += embedding(datenesel)
+            if key != 'MetaKeywordShop':
+                user_prompt += embedding(datenesel, key)
+
 
             response = openai.ChatCompletion.create(
                 model=model,

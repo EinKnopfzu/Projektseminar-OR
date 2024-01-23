@@ -104,12 +104,12 @@ user_prompt_7 = "Verfeinere das Ergebnis nach den Vorgaben  "
 #########################################################################################################################################################################################################################
 """
 
-hauptprompts = {"system_AmazonTitle" : system_prompt_1,
-                "user_AmazonTitle" : user_prompt_1,
+hauptprompts = {"system_TitleAmazon" : system_prompt_1,
+                "user_TitleAmazon" : user_prompt_1,
                 "system_DescriptionLongShops": system_prompt_2,
                 "user_DescriptionLongShops": user_prompt_2,
-                "system_SalesArguments" : system_prompt_3,
-                "user_SalesArguments" : user_prompt_3,
+                "system_SalesArgument" : system_prompt_3,
+                "user_SalesArgument" : user_prompt_3,
                 "system_AmazonBulletPoints" : system_prompt_4,
                 "user_AmazonBulletPoints" : user_prompt_4,
                 "system_WorthKnowingShop" : system_prompt_5,

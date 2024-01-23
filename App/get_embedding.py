@@ -7,7 +7,6 @@ from config import api_key
 import routes
 
 openai.api_key = api_key
-
 def cosine_similarity(vec_a, vec_b):
     return np.dot(vec_a, vec_b) / (np.linalg.norm(vec_a,2) * np.linalg.norm(vec_b,2))
 
@@ -17,7 +16,7 @@ def abfrage(datenesel):
     return response['data'][0]['embedding']
 
 
-def embedding(datenesel):
+def embedding(datenesel, typ_key):
 
     persistant_dataframe_embedding = pd.read_csv("preprocessed_embeddings.csv")
     routes.status_global["Datenähnlichkeiten gestartet"] = True  # status update
@@ -37,7 +36,10 @@ def embedding(datenesel):
 
     result = []
     for index in range(0,3):
-        result.append(persistant_dataframe_embedding["Prompt"][index])
+        if typ_key == 'AmazonBulletPoints':
+            result.append("<ul><li>" + persistant_dataframe_embedding["AmazonBulletPoint1"][index] + "</li><li>" + persistant_dataframe_embedding["AmazonBulletPoint2"][index] + "</li><li>" + persistant_dataframe_embedding["AmazonBulletPoint3"][index] + "</li><li>" + persistant_dataframe_embedding["AmazonBulletPoint4"][index] + "</li><li>" + persistant_dataframe_embedding["AmazonBulletPoint5"][index] + "</li></ul>")
+        else:
+            result.append(persistant_dataframe_embedding[typ_key][index])
 
     routes.status_global["Datenähnlichkeiten abgeschlossen"] = True  # status update
 
