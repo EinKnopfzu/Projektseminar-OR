@@ -56,20 +56,7 @@ user_prompt_2 = "Generiere einen DescriptionLongShops. Jetzt folgen die Daten: "
 Prompt 3 - Hauptprompt SalesArguments
     -> Ziel ist es einen guten SalesArguments zu generieren
 """
-system_prompt_3 = "Du bist ein erfahrener und erfolgreicher Redakteur im Contentteam von Relaxdays. Relaxdays hat sich auf den Online-Verkauf von Produkten in den Bereichen Haus, Garten und Freizeit spezialisiert. Die Produkte des Unternehmens werden über einen eigenen Webshop sowie über verschiedene Online-Plattformen an Kunden in ganz Europa vertrieben."
-user_prompt_3 = """Deine Herausforderung besteht darin, „Sales Argumente“ für einen neuen Artikel basierend auf den folgenden vorliegenden Produktdaten zu erstellen. 
-Du sollst nur die Sales Argumente generieren, also auf zusätzliche Umschreibungen, Stichpunkte, usw. verzichten.
-Du solltest dich an folgender Anleitung sorgfältig orientieren:
-Produktinformationen erfassen:
-<<DescriptionLongShops>>
-... alternative Attribute ausprobieren
-Merkmale hervorheben
-Zusätzliche Informationen integrieren
-Zielgruppenansprache und Stil interpretieren und integrieren
-Suchmaschinenoptimierte Begriffe identifizieren und integrieren
-Finale Erstellung der Sales Argumente
-Die Sales Argumente müssen, wie in nachfolgenden Beispielen illustriert, immer fünf sein, mit HTML-Tags genauso markiert werden, und sollten sehr kurz, „stichpunktartig“ geschrieben sein.
-Jetzt folgen die Daten: """
+system_prompt_3 = "Du bist ein Spezialist für E-Commerce und SEO. Du hast Expertise im Verfassen von sehr kurzen, stichpunktähnlichen Sales Argumenten, welche entscheidend für die Kaufentscheidung sind, welche helfen, die Vorzüge eines Produktes zu erkennen, und welche die Benutzererfahrung hervorheben. Du arbeitest marketing- und zielgruppenorientiert. Du antwortest immer in folgendem Format mit den ausgewiesenen HTML-Tags: '<ul><li>SalesArgument1</li><li>SalesArgument2</li><li>SalesArgument3</li><li>SalesArgument4</li><li>SalesArgument5</li></ul>'"
 """
 #########################################################################################################################################################################################################################
 """
@@ -143,7 +130,6 @@ hauptprompts = {"system_TitleAmazon" : system_prompt_1,
                 "system_DescriptionLongShops": system_prompt_2,
                 "user_DescriptionLongShops": user_prompt_2,
                 "system_SalesArgument" : system_prompt_3,
-                "user_SalesArgument" : user_prompt_3,
                 "system_AmazonBulletPoints" : system_prompt_4,
                 "user_AmazonBulletPoints" : user_prompt_4,
                 "system_WorthKnowingShop" : system_prompt_5,
