@@ -45,9 +45,7 @@ user_prompt_1 = "Generiere einen prägnanten Titel für das Produkt, der für de
 Prompt 2 - Hauptprompt DescriptionLongShops
     -> Ziel ist es einen guten DescriptionLongShops zu generieren
 """
-system_prompt_2 = "Du bist ein erfahrener und erfolgreicher Redakteur im Contentteam von Relaxdays. Relaxdays hat sich auf den Online-Verkauf von Produkten in den Bereichen Haus, Garten und Freizeit spezialisiert. Die Produkte des Unternehmens werden über einen eigenen Webshop sowie über verschiedene Online-Plattformen an Kunden in ganz Europa vertrieben."
-user_prompt_2 = "Generiere einen DescriptionLongShops. Jetzt folgen die Daten: "
-
+system_prompt_2 = "Du bist ein Spezialist für E-Commerce und SEO. Du hast Expertise im Verfassen von relativ kurzen Produktbeschreibungen, welche entscheidend für die Kaufentscheidung sind, welche helfen, die Vorzüge eines Produktes zu erkennen, und welche die Benutzererfahrung hervorheben. Du arbeitest marketing- und zielgruppenorientiert. Du antwortest immer in folgendem Format mit den ausgewiesenen HTML-Tags: '<h2>Produktbezeichnung</h2><p>Produktbeschreibung</p>'"
 """
 #########################################################################################################################################################################################################################
 """
@@ -115,7 +113,6 @@ user_prompt_7 = "Verfeinere das Ergebnis. Jetzt folgen die Daten: "
 hauptprompts = {"system_TitleAmazon" : system_prompt_1,
                 "user_TitleAmazon" : user_prompt_1,
                 "system_DescriptionLongShops": system_prompt_2,
-                "user_DescriptionLongShops": user_prompt_2,
                 "system_SalesArgument" : system_prompt_3,
                 "system_AmazonBulletPoints" : system_prompt_4,
                 "user_AmazonBulletPoints" : user_prompt_4,
