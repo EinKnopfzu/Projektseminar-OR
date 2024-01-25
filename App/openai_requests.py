@@ -28,7 +28,7 @@ def openai_requests(datenesel, config):
         if (config["generate_selection"][key] == True):
             routes.status_global["Hauptabfrage " + key] = True  # status update
 
-            if key not in ('SalesArgument', 'WorthKnowingShop'):
+            if key not in ('SalesArgument', 'WorthKnowingShop', 'DescriptionLongShops'):
                 system_prompt = prompts.hauptprompts["system_" + key]
                 user_prompt = prompts.hauptprompts["user_" + key] + datenesel
 
