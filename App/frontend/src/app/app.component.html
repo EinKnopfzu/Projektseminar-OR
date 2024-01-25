@@ -91,8 +91,9 @@
   
             <div class="box-body">
               <div class="direct-chat-messages">
+                <!-- Message -->
                 <!-- ngFor each chat object in 'product_object.message_array' -->
-                <ng-template ngFor let-chat_object [ngForOf]="product_object.value.message_array">
+                <ng-template ngFor let-chat_object let-iChat="index" [ngForOf]="product_object.value.message_array">
                   <div class="direct-chat-msg" [class]="chat_object.llm_bot? '' : 'right'">
                     <div *ngIf="chat_object.llm_bot; then thenBlockBot else elseBlockBot"></div>
                     <ng-template #thenBlockBot style="display: contents">
@@ -105,13 +106,33 @@
                         <path d="M8 1a5 5 0 0 0-5 5v1h1a1 1 0 0 1 1 1v3a1 1 0 0 1-1 1H3a1 1 0 0 1-1-1V6a6 6 0 1 1 12 0v6a2.5 2.5 0 0 1-2.5 2.5H9.366a1 1 0 0 1-.866.5h-1a1 1 0 1 1 0-2h1a1 1 0 0 1 .866.5H11.5A1.5 1.5 0 0 0 13 12h-1a1 1 0 0 1-1-1V8a1 1 0 0 1 1-1h1V6a5 5 0 0 0-5-5"/>
                       </svg>
                       <div class="direct-chat-text">
-                        {{chat_object.message}}
-                        <button class="btn btn-outline-secondary clipboard" (click)="copy_to_clipboard(chat_object.message)" data-toggle="tooltip" data-placement="top" title="Copy to clipboard">
-                          <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-clipboard" viewBox="0 0 16 16">
-                            <path d="M4 1.5H3a2 2 0 0 0-2 2V14a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V3.5a2 2 0 0 0-2-2h-1v1h1a1 1 0 0 1 1 1V14a1 1 0 0 1-1 1H3a1 1 0 0 1-1-1V3.5a1 1 0 0 1 1-1h1z"/>
-                            <path d="M9.5 1a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5h-3a.5.5 0 0 1-.5-.5v-1a.5.5 0 0 1 .5-.5zm-3-1A1.5 1.5 0 0 0 5 1.5v1A1.5 1.5 0 0 0 6.5 4h3A1.5 1.5 0 0 0 11 2.5v-1A1.5 1.5 0 0 0 9.5 0z"/>
-                          </svg>
-                        </button>
+                        <div>
+                          {{chat_object.message}}
+                          <!-- copy to clipboard -->
+                          <button class="btn btn-outline-secondary clipboard" (click)="copy_to_clipboard(chat_object.message)"
+                            data-toggle="tooltip" data-placement="top" title="Copy to clipboard">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-clipboard" viewBox="0 0 16 16">
+                              <path d="M4 1.5H3a2 2 0 0 0-2 2V14a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V3.5a2 2 0 0 0-2-2h-1v1h1a1 1 0 0 1 1 1V14a1 1 0 0 1-1 1H3a1 1 0 0 1-1-1V3.5a1 1 0 0 1 1-1h1z"/>
+                              <path d="M9.5 1a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5h-3a.5.5 0 0 1-.5-.5v-1a.5.5 0 0 1 .5-.5zm-3-1A1.5 1.5 0 0 0 5 1.5v1A1.5 1.5 0 0 0 6.5 4h3A1.5 1.5 0 0 0 11 2.5v-1A1.5 1.5 0 0 0 9.5 0z"/>
+                            </svg>
+                          </button>
+                          <!-- show prompt -->
+                          <button *ngIf="chat_object.prompt" class="btn btn-outline-secondary clipboard" type="button"
+                            data-toggle="tooltip" data-placement="top" title="Show prompt"
+                            data-bs-toggle="collapse" [attr.data-bs-target]="'#collapseId-' + iChat + '-' + product_object.key" style="right: 38px;">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-terminal" viewBox="0 0 16 16">
+                              <path d="M6 9a.5.5 0 0 1 .5-.5h3a.5.5 0 0 1 0 1h-3A.5.5 0 0 1 6 9M3.854 4.146a.5.5 0 1 0-.708.708L4.793 6.5 3.146 8.146a.5.5 0 1 0 .708.708l2-2a.5.5 0 0 0 0-.708z"/>
+                              <path d="M2 1a2 2 0 0 0-2 2v10a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V3a2 2 0 0 0-2-2zm12 1a1 1 0 0 1 1 1v10a1 1 0 0 1-1 1H2a1 1 0 0 1-1-1V3a1 1 0 0 1 1-1z"/>
+                            </svg>
+                          </button>
+                        </div>
+                        <!-- prompt toggle -->
+                        <div class="collapse" id="{{'collapseId-' + iChat + '-' + product_object.key}}" style="margin-top: 6px;">
+                          <div class="card card-body prompt-toggle">
+                            <b>Prompt:</b>
+                            {{chat_object.prompt}}
+                          </div>
+                        </div>
                       </div>
                     </ng-template>
                     <ng-template #elseBlockBot style="display: contents">

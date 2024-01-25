@@ -208,6 +208,7 @@ body {
 .right .direct-chat-text {
     margin-right: 50px;
     margin-left: 0;
+    padding-left: 15px;
 }
 
 .box-footer {
@@ -239,15 +240,19 @@ body {
 }
 
 .clipboard {
-    position: absolute;
-    bottom: 0;
-    right: 0;
     cursor: pointer;
     padding: 0px 10px 4px 10px;
-    margin-right: -1px;
+    float: right;
+    margin-right: -11px;
     margin-bottom: -1px;
+    margin-left: 11px;
 }
 
 .clipboard:active {
     opacity: 50%;
+}
+
+.prompt-toggle {
+    background: rgb(0 0 0 / 20%);
+    padding: 5px 10px;
 }
