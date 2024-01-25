@@ -52,9 +52,9 @@ def generate_product_features(user_input):
 
     logging.info('Datenesel vorabgefragt: ' + output)
 
-    return output
+    return [output, input]
 
-def refine_product_features(combined_outputs):
+def refine_product_features(combined_outputs, input):
     system_prompt = prompts.pre_system_prompt_2
     user_prompt = prompts.pre_user_prompt_2_part1 + combined_outputs + prompts.pre_user_prompt_2_part2
 
@@ -70,9 +70,9 @@ def refine_product_features(combined_outputs):
         frequency_penalty=frequency_penalty,
         presence_penalty=presence_penalty
     )
-    logging.info('Datenesel erstellt: ' + response.choices[0].message['content'])
+    logging.info('Datenesel erstellt: ' + input + response.choices[0].message['content'])
 
     routes.status_global["Datenesel erstellt"] = True                          # status update
 
-    return response.choices[0].message['content']
+    return input + response.choices[0].message['content']
 

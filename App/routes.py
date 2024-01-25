@@ -41,7 +41,8 @@ def create_routes(app):
         config = request.json
         logging.info('Generate-Config: ' + str(config))
 
-        datenesel = refine_product_features(generate_product_features(config))
+        generate_res = generate_product_features(config)
+        datenesel = refine_product_features(generate_res[0], generate_res[1])
         return openai_requests(datenesel, config)
 
     @app.route('/reprompt', methods=['POST'])
