@@ -21,4 +21,5 @@ def check_structure(key, response_text):
         return check_sales_argument_structure(response_text)
     if key == 'WorthKnowingShop':
         return check_worth_knowing_shop_structure(response_text)
-
+    if key == 'DescriptionLongShops':
+        return check_description_long_shops_structure(response_text)
