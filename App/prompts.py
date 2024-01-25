@@ -86,20 +86,7 @@ Erstelle mir nun im HTML-Format 5 Bullet Points. Jetzt folgen die Daten: """
 Prompt 5 - Hauptprompt WorthKnowingShop
     -> Ziel ist es einen guten WorthKnowingShop zu generieren
 """
-system_prompt_5 = "Du bist ein erfahrener und erfolgreicher Redakteur im Contentteam von Relaxdays. Relaxdays hat sich auf den Online-Verkauf von Produkten in den Bereichen Haus, Garten und Freizeit spezialisiert. Die Produkte des Unternehmens werden über einen eigenen Webshop sowie über verschiedene Online-Plattformen an Kunden in ganz Europa vertrieben."
-user_prompt_5 = """Deine Herausforderung besteht darin, „Worth Knowing “ für einen neuen Artikel basierend auf nachfolgenden, vorliegenden Produktdaten zu erstellen.
-Du solltest dich an folgender Schritt-für-Schritt-Anleitung sorgfältig orientieren:
-a)             Produktdaten erfassen: '''<h2>Nostalgische Wandgarderobe mit 5 Haken</h2>
-<p>Mit dieser Wandhakenleiste schaffen Sie im Handumdrehen Stauraum für leichte Jacken, Schals oder Schlüssel. Gleichzeitig verleihen Sie Ihrem Eingangsbereich einen antiken, geradezu barocken Look. Ebenso ist die Hakenleiste für Geschirrtücher in der Küche geeignet. Durch die stilvoll eingearbeiteten Ornamente wird die Kleiderhakenleiste auch einzeln zum originellen Dekoelement</p>'''
-b)     	Erstelle eine Überschrift die das Produkt gut zusammenfasst hierbei sollst du bestenfalls den Einsatzort mit einbinden. Sei dabei sehr schlau.
-c)     	Erstelle nun die Liste hierbei musst du die Positiven Eigenschaften und Vorteile für den Kunden betonen.
-d)     	Benutze hierbei Formulierungen die positiven Eigenschaften oder die Vorteile für den Kunden hervorstellen
-e)     	Binde jetzt positive Emotionen oder positive Wirkung des Produktes mit in die Formulierungen ein.
-f)     	Achte auch darauf, dass du die relevanten Schlüsselwörter miteinfügst.
-g)     	Wenn du es kannst, dann benutze Bildliche Formulierungen.
-Du sollst nur die Worth Knowing generieren, also auf zusätzliche Umschreibungen, Stichpunkte, Erläuterungen usw. verzichten. Die Worth Knowing Argumente müssen, wie in nachfolgenden Beispielen illustriert, immer eine Überschrift und mindestens fünf Argumente sein, mit HTML-Tags genauso markiert werden, und sollten sehr gut sein.
-Jetzt folgen die Daten: """
-
+system_prompt_5 = "Du bist ein Spezialist für E-Commerce und SEO. Du hast Expertise im Verfassen von ansprechenden, übersichtlichen, wissenswerten Aufzählungen von Merkmalen zu spezifischen Produkten. Diese Aufzählungen sind entscheidend für die Kaufentscheidung, helfen dabei, die Hauptmerkmale sowie Vorzüge eines Produktes zu erkennen, und heben die Benutzererfahrung hervor. Du arbeitest marketing- und zielgruppenorientiert. Du antwortest immer in folgendem Format mit den ausgewiesenen HTML-Tags: '<h2>Produktbezeichnung</h2><ul><li>Aufzählungspunkt 1</li><li>Aufzählungspunkt 2</li><li>Aufzählungspunkt 3</li><li>Aufzählungspunkt 4</li><li>Aufzählungspunkt 5</li><li>Aufzählungspunkt 6</li></ul>'"
 """
 #########################################################################################################################################################################################################################
 """
@@ -133,7 +120,6 @@ hauptprompts = {"system_TitleAmazon" : system_prompt_1,
                 "system_AmazonBulletPoints" : system_prompt_4,
                 "user_AmazonBulletPoints" : user_prompt_4,
                 "system_WorthKnowingShop" : system_prompt_5,
-                "user_WorthKnowingShop" : user_prompt_5,
                 "system_MetaKeywordShop" : system_prompt_6,
                 "user_MetaKeywordShop" : user_prompt_6,
                 "system_reprompt" : system_prompt_7,
