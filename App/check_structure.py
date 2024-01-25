@@ -11,6 +11,11 @@ def check_worth_knowing_shop_structure(response_text):
             and (response_text.count("</li><li>") == 5)
             and (response_text.endswith("</li></ul>")))
 
+def check_description_long_shops_structure(response_text):
+    return (response_text.startswith("<h2>")
+            and ("</h2><p>" in response_text)
+            and (response_text.endswith("</p>")))
+
 def check_structure(key, response_text):
     if key == 'SalesArgument':
         return check_sales_argument_structure(response_text)
