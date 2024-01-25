@@ -52,7 +52,7 @@ def generate_product_features(user_input):
 
     logging.info('Datenesel vorabgefragt: ' + output)
 
-    return [output, input]
+    return {"output" : output, "input" : input}
 
 def refine_product_features(combined_outputs, input):
     system_prompt = prompts.pre_system_prompt_2

@@ -26,7 +26,7 @@ def reprompt_request(config):
      # status update
 
     system_prompt = prompts.hauptprompts["system_reprompt"]
-    user_prompt = prompts.hauptprompts["user_reprompt"] + config["context"] + config["instruction"]
+    user_prompt = prompts.hauptprompts["user_reprompt"] + config["prompt_original"] + config["prompt_response"] + config["instruction"]
 
     routes.status_global["Hauptabfrage Reprompt"] = True                    # status update
 
