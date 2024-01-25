@@ -5,10 +5,12 @@ import { HttpClientModule } from '@angular/common/http';
 
 import { AppComponent } from './app.component';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
+import { SortByOrderPipe } from './sort-by-order.pipe';
 
 @NgModule({
   declarations: [
-    AppComponent
+    AppComponent,
+    SortByOrderPipe
   ],
   imports: [
     BrowserModule,
