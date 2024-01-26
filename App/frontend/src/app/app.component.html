@@ -1,5 +1,24 @@
 <main class="form-main w-100 m-auto shadow">
   <h1 class="h3 mb-3 fw-normal text-center">Projektseminar Produktbeschreibungsgenerator</h1>
+  <button class="btn btn-primary" style="float: right; margin-top: -38px;" type="button" data-bs-toggle="collapse" data-bs-target="#collapseExample">
+    <i class="bi bi-check-circle"></i>
+  </button>
+  <div class="collapse" id="collapseExample">
+    <div class="card card-body" style="display: inline-block; width: 100%;">
+      Daten vorverarbeitet <i [class]="backend_status['Daten vorverarbeitet']? 'bi bi-check-circle text-success': 'bi bi-x-circle text-danger'"></i><br>
+      Daten vorabgefragt <i [class]="backend_status['Daten vorabgefragt']? 'bi bi-check-circle text-success': 'bi bi-x-circle text-danger'"></i><br>
+      Datenesel erstellt <i [class]="backend_status['Datenesel erstellt']? 'bi bi-check-circle text-success': 'bi bi-x-circle text-danger'"></i>
+      <hr>
+      TitleAmazon <i [class]="get_status('TitleAmazon')"></i><br>
+      DescriptionLongShops <i [class]="get_status('DescriptionLongShops')"></i><br>
+      SalesArguments <i [class]="get_status('SalesArgument')"></i><br>
+      AmazonBulletPoints <i [class]="get_status('AmazonBulletPoints')"></i><br>
+      WorthKnowingShop <i [class]="get_status('WorthKnowingShop')"></i><br>
+      MetaKeywordShop <i [class]="get_status('MetaKeywordShop')"></i>
+      <hr>
+      Reprompt <i [class]="get_status('Reprompt')"></i>
+    </div>
+  </div>
   <br>
 
   <!-- product_info -->

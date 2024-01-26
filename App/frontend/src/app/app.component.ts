@@ -3,9 +3,31 @@ import { HttpClient } from '@angular/common/http';
 import { HttpHeaders } from '@angular/common/http';
 import { delay } from 'rxjs/operators';
 import { NgbNavModule } from '@ng-bootstrap/ng-bootstrap';
+import { interval } from 'rxjs';
 
 type MessageArray = { llm_bot: boolean, timestamp: string, message: string, prompt?: string }[]
 type HTTP_LLM_Response = { typ: string, prompt: string, response: string }
+type HTTP_Status_Response = {
+  "Antwort AmazonBulletPoints": boolean,
+  "Antwort DescriptionLongShops": boolean,
+  "Antwort MetaKeywordShop": boolean,
+  "Antwort Reprompt": boolean,
+  "Antwort SalesArgument": boolean,
+  "Antwort TitleAmazon": boolean,
+  "Antwort WorthKnowingShop": boolean,
+  "Daten vorabgefragt": boolean,
+  "Daten vorverarbeitet": boolean,
+  "Datenesel erstellt": boolean,
+  "Datenähnlichkeiten abgeschlossen": boolean,
+  "Datenähnlichkeiten gestartet": boolean,
+  "Hauptabfrage AmazonBulletPoints": boolean,
+  "Hauptabfrage DescriptionLongShops": boolean,
+  "Hauptabfrage MetaKeywordShop": boolean,
+  "Hauptabfrage Reprompt": boolean,
+  "Hauptabfrage SalesArgument": boolean,
+  "Hauptabfrage TitleAmazon": boolean,
+  "Hauptabfrage WorthKnowingShop": boolean
+}
 export interface ProductInformation { select_for_generate: boolean, display_name: string, order: number, message_array: MessageArray, repromt_chat: string }
 
 @Component({
@@ -14,7 +36,17 @@ export interface ProductInformation { select_for_generate: boolean, display_name
   styleUrls: ['./app.component.css']
 })
 export class AppComponent {
-  constructor(private http: HttpClient) { }
+  constructor(private http: HttpClient) {
+    interval(1000).subscribe(() => { // will execute every second
+      console.log("Test")
+
+      this.http.get<HTTP_Status_Response>('http://127.0.0.1:5000/status').subscribe(response => {
+        for (const [key, value] of Object.entries(response)) {
+          this.backend_status[key] = value
+        }
+      })
+    })
+  }
 
   active = "TitleAmazon"
   dummy_http_request = true
@@ -54,6 +86,32 @@ export class AppComponent {
     "AmazonBulletPoints": {display_name: "Bulletpoints", select_for_generate: false, order: 3, message_array: this.direct_chat_messages_array.map(object => ({ ...object })), repromt_chat: "" },
     "WorthKnowingShop": {display_name: "Worth Knowing", select_for_generate: false, order: 4, message_array: this.direct_chat_messages_array.map(object => ({ ...object })), repromt_chat: "" },
     "MetaKeywordShop": {display_name: "Meta Keywords", select_for_generate: false, order: 5, message_array: this.direct_chat_messages_array.map(object => ({ ...object })), repromt_chat: "" }
+  }
+
+  backend_status: { [product_id: string]: boolean } = {
+    "Daten vorverarbeitet" : false,
+    "Daten vorabgefragt": false,
+    "Datenesel erstellt": false,
+
+    "Hauptabfrage TitleAmazon": false, "Antwort TitleAmazon": false,
+    "Hauptabfrage DescriptionLongShops": false, "Datenähnlichkeiten gestartet" : false, "Datenähnlichkeiten abgeschlossen" : false, "Antwort DescriptionLongShops": false,
+    "Hauptabfrage SalesArgument": false, "Antwort SalesArgument": false,
+    "Hauptabfrage AmazonBulletPoints": false, "Antwort AmazonBulletPoints": false,
+    "Hauptabfrage WorthKnowingShop": false, "Antwort WorthKnowingShop": false,
+    "Hauptabfrage MetaKeywordShop": false, "Antwort MetaKeywordShop": false,
+    
+    "Hauptabfrage Reprompt": false, "Antwort Reprompt": false
+  }
+
+  get_status(product_key: string): string {
+    if (!this.backend_status["Hauptabfrage " + product_key]) {
+      return 'bi bi-x-circle text-danger'
+    }
+    if(!this.backend_status["Antwort " + product_key]) {
+      return 'bi bi-arrow-clockwise'
+    } else {
+      return 'bi bi-check-circle text-success'
+    }
   }
 
   // function to set the standard for input settings
