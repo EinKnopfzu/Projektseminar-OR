@@ -5,9 +5,10 @@ import logging
 import openai
 import routes
 import prompts
+from check_structures import check_html, check_length
 from config import api_key, model, temperature, max_length, top_p, frequency_penalty, presence_penalty
 from get_embedding import embedding
-from check_structures import check_structure
+
 # Konfiguration für den OpenAI GPT-3.5 Aufruf in config
 openai.api_key = api_key
 
@@ -52,7 +53,7 @@ def openai_requests(datenesel, config):
                 system_prompt = prompts.hauptprompts["system_" + key]
                 user_prompt = datenesel
                 dialogue = embedding(datenesel, key)
-                for i in range(3):
+                for i in range(5):
                     response = openai.ChatCompletion.create(
                         model=model,
                         messages=[
@@ -72,7 +73,7 @@ def openai_requests(datenesel, config):
                         presence_penalty=presence_penalty
                     )
                     response_try = response.choices[0].message['content']
-                    if check_structure(key, response_try):
+                    if check_html(config["typ"], response_try) and check_length(config["typ"], response_try, i):
                         break
             
             logging.info('Hauptabfrage ' + key + ': ' + response.choices[0].message['content'])

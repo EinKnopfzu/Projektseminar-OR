@@ -1,10 +1,12 @@
 import csv
+import pandas as pd
+import random
 import json
 import logging
 import openai
 import routes
 import prompts
-from check_structures import check_structure
+from  check_structures import check_html, check_length
 from config import api_key, model, temperature, max_length, top_p, frequency_penalty, presence_penalty
 # Konfiguration für den OpenAI GPT-3.5 Aufruf in config
 openai.api_key = api_key
@@ -27,19 +29,23 @@ def reprompt_request(config):
      # status update
 
     system_prompt = prompts.hauptprompts["system_reprompt"]
-    # user_prompt = prompts.hauptprompts["user_reprompt"] + config["prompt_original"] + config["prompt_response"] + config["instruction"]
 
     routes.status_global["Hauptabfrage Reprompt"] = True                    # status update
 
+    # random_dialogue = pd.read_csv("preprocessed_embeddings.csv").sample(n=1).iloc[0]
+    
     if config["typ"] in ('SalesArgument', 'WorthKnowingShop', 'DescriptionLongShops'):
-        for i in range(3):
+        for i in range(5):
             response = openai.ChatCompletion.create(
                 model=model,
                 messages=[
                     {"role": "system", "content": system_prompt},
+                    # {"role": "user", "content": random_dialogue['Inputdata']},
+                    # {"role": "assistant", "content": random_dialogue[config["typ"]]},                    
                     {"role": "user", "content": config["prompt_original"]},
                     {"role": "assistant", "content": config["prompt_response"]},
-                    {"role": "user", "content": config["instruction"]}
+                    {"role": "user", "content": config["instruction"] + "\n" + prompts.hauptprompts["struct_" + config["typ"]]},
+                    {"role": "user", "content": config["prompt_original"]}
                 ],
                 temperature=0.5,
                 max_tokens=max_length,
@@ -48,9 +54,9 @@ def reprompt_request(config):
                 presence_penalty=presence_penalty
             )
             response_try = response.choices[0].message['content']
-            if check_structure(config["typ"], response_try):
+            if (check_html(config["typ"], response_try) == True):
                 break
-    else:
+    elif config["typ"] not in ('SalesArgument', 'WorthKnowingShop', 'DescriptionLongShops'):
         response = openai.ChatCompletion.create(
             model=model,
             messages=[

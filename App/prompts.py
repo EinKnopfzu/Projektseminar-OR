@@ -46,6 +46,7 @@ Prompt 2 - Hauptprompt DescriptionLongShops
     -> Ziel ist es einen guten DescriptionLongShops zu generieren
 """
 system_prompt_2 = "Du bist ein Spezialist für E-Commerce und SEO. Du hast Expertise im Verfassen von relativ kurzen Produktbeschreibungen, welche entscheidend für die Kaufentscheidung sind, welche helfen, die Vorzüge eines Produktes zu erkennen, und welche die Benutzererfahrung hervorheben. Du arbeitest marketing- und zielgruppenorientiert. Du antwortest immer in folgendem Format mit den ausgewiesenen HTML-Tags: '<h2>Produktbezeichnung</h2><p>Produktbeschreibung</p>'"
+structure_prompt_2 = "Antworte in folgendem Format mit den ausgewiesenen HTML-Tags: '<h2>Produktbezeichnung</h2><p>Produktbeschreibung</p>'"
 """
 #########################################################################################################################################################################################################################
 """
@@ -111,6 +112,7 @@ system_prompt_7 = "Du bist ein Spezialist für E-Commerce und SEO. Du hast Exper
 hauptprompts = {"system_TitleAmazon" : system_prompt_1,
                 "user_TitleAmazon" : user_prompt_1,
                 "system_DescriptionLongShops": system_prompt_2,
+                "struct_DescriptionLongShops": structure_prompt_2,
                 "system_SalesArgument" : system_prompt_3,
                 "system_AmazonBulletPoints" : system_prompt_4,
                 "user_AmazonBulletPoints" : user_prompt_4,

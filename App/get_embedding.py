@@ -12,7 +12,7 @@ def cosine_similarity(vec_a, vec_b):
 
 def abfrage(datenesel):
     datenesel = datenesel.replace("\n", " ").strip()
-    response = openai.Embedding.create(input=datenesel, model="text-embedding-ada-002")
+    response = openai.Embedding.create(input=datenesel, model="text-embedding-3-small")
     return response['data'][0]['embedding']
 
 
