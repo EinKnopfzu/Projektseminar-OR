@@ -3,6 +3,7 @@ import openai
 import logging
 import routes
 import prompts
+import random
 from config import api_key, model, temperature, max_length, top_p, frequency_penalty, presence_penalty
 
 # Konfiguration für den OpenAI GPT-3.5 Aufruf in config
@@ -45,7 +46,8 @@ def generate_product_features(user_input):
             presence_penalty=presence_penalty
         )
         combined_outputs.append(response.choices[0].message['content'])
-
+        
+    random.shuffle(combined_outputs)
     output = " / ".join(combined_outputs)
 
     routes.status_global["Daten vorabgefragt"] = True                       # status update
