@@ -14,7 +14,8 @@ def check_worth_knowing_shop_structure(response_text):
 def check_description_long_shops_structure(response_text):
     return (response_text.startswith("<h2>")
             and ("</h2><p>" in response_text)
-            and (response_text.endswith("</p>")))
+            and (response_text.endswith("</p>"))
+            and (400 <= (len(response_text) - len("<h2>") - len("</h2><p>") - len("</p>")) <= 500))
 
 def check_structure(key, response_text):
     if key == 'SalesArgument':
