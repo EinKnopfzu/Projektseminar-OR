@@ -38,24 +38,61 @@
   <div class="row">
     <div class="col">
       <div class="container collapse show" id="collapseSettings">
-        <div class="card card-body">
+        <div class="card card-body" style="padding-bottom: 7px;">
           <div class="row">
             <!-- select product to generate settings -->
             <div class="col">
               <h3 class="h4 mb-3 fw-normal">Generiere:</h3>
-              <div *ngFor="let product_object_select of (product_info_dict | keyvalue) | sortByOrder" class="form-check" >
+              <div *ngFor="let product_object_select of (product_info_dict | keyvalue) | sortByOrder" class="form-check">
                 <input [(ngModel)]="product_info_dict[product_object_select.key].select_for_generate" class="form-check-input" type="checkbox" name="product_object_select.key">
                 <label class="form-check-label">{{product_object_select.value.display_name}}</label>
+              </div>
+              <hr class="hr_llm">
+              <div class="form-check">
+                <input [(ngModel)]="dummy_http_request" class="form-check-input" type="checkbox" name="ProductionBool">
+                <label class="form-check-label">Dummy HTTP Request</label>
               </div>
             </div>
             <!-- http settings -->
             <div class="col">
-              <button class="btn btn-secondary py-2 shadow float-start" style="width: 49%;" (click)="set_std_input()">Standardwerte setzen</button>
+              <button class="btn btn-secondary py-2 shadow float-start" style="width: 49%;" (click)="set_std_input()">Dummywerte setzen</button>
               <button class="btn btn-secondary py-2 shadow float-end" style="width: 49%;" (click)="reset_input()">Einstellungen zurücksetzen</button>
               <br>
-              <div class="form-check float-start" style="margin-top: 10px;">
-                <input [(ngModel)]="dummy_http_request" class="form-check-input" type="checkbox" name="ProductionBool">
-                <label class="form-check-label">Dummy HTTP Request</label>
+              <div class="form-check float-start" style="margin-top: 10px; width: 100%; padding-left: 0;">
+                <!-- global llm settings -->
+                <div class="container">
+                  <div class="row llm_settings_row">
+                    <div class="col pe-2">
+                      <select class="form-select" [(ngModel)]="input.llm_settings.select_llm" style="margin-top: 5px;">
+                        <option value="ChatGPT-3.5/Llama-selbstrainiert">ChatGPT-3.5/Llama-selbstrainiert</option>
+                      </select>
+                    </div>
+                    <div class="col ps-2">
+                      <label class="form-label llm_settings_label" for="temperature">Temperature: {{input.llm_settings.temperature}}</label>
+                      <input [(ngModel)]="input.llm_settings.temperature" type="range" class="form-range" min="0" max="2" step="0.01" id="temperature">
+                    </div>
+                  </div>
+                  <div class="row llm_settings_row">
+                    <div class="col pe-2">
+                      <label class="form-label llm_settings_label" for="max_tokens">Maximum tokens: {{input.llm_settings.max_tokens}}</label>
+                      <input [(ngModel)]="input.llm_settings.max_tokens" type="range" class="form-range" min="0" max="2048" step="1" id="max_tokens">
+                    </div>
+                    <div class="col ps-2">
+                      <label class="form-label llm_settings_label" for="top_p">Top p: {{input.llm_settings.top_p}}</label>
+                      <input [(ngModel)]="input.llm_settings.top_p" type="range" class="form-range" min="0" max="1" step="0.01" id="top_p">
+                    </div>
+                  </div>
+                  <div class="row llm_settings_row">
+                    <div class="col pe-2">
+                      <label class="form-label llm_settings_label" for="frequency_penalty">Frequency penalty: {{input.llm_settings.frequency_penalty}}</label>
+                      <input [(ngModel)]="input.llm_settings.frequency_penalty" type="range" class="form-range" min="0" max="2" step="0.01" id="frequency_penalty">
+                    </div>
+                    <div class="col ps-2">
+                      <label class="form-label llm_settings_label" for="presence_penalty">Presence penalty: {{input.llm_settings.presence_penalty}}</label>
+                      <input [(ngModel)]="input.llm_settings.presence_penalty" type="range" class="form-range" min="0" max="2" step="0.01" id="presence_penalty">
+                    </div>
+                  </div>
+                </div>
               </div>
             </div>
           </div>

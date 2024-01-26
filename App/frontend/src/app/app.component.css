@@ -256,3 +256,16 @@ body {
     background: rgb(0 0 0 / 20%);
     padding: 5px 10px;
 }
+
+.llm_settings_label {
+    margin-bottom: 0px;
+}
+
+.llm_settings_row {
+    margin-top: 11px;
+}
+
+.hr_llm {
+    width: 34%;
+    margin: 10px 0px 5px 0px;
+}
