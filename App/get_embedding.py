@@ -5,6 +5,7 @@ import ast
 import pandas as pd
 from config import api_key
 import routes
+import random
 
 openai.api_key = api_key
 def cosine_similarity(vec_a, vec_b):
@@ -39,7 +40,7 @@ def embedding(datenesel, typ_key):
         if typ_key == 'AmazonBulletPoints':
             result.append("<ul><li>" + persistant_dataframe_embedding["AmazonBulletPoint1"][index] + "</li><li>" + persistant_dataframe_embedding["AmazonBulletPoint2"][index] + "</li><li>" + persistant_dataframe_embedding["AmazonBulletPoint3"][index] + "</li><li>" + persistant_dataframe_embedding["AmazonBulletPoint4"][index] + "</li><li>" + persistant_dataframe_embedding["AmazonBulletPoint5"][index] + "</li></ul>")
         elif typ_key in ('SalesArgument', 'WorthKnowingShop', 'DescriptionLongShops'):
-            return persistant_dataframe_embedding[['Inputdata', typ_key]].head(3)
+            return persistant_dataframe_embedding[['Inputdata', typ_key]].head(5).sample(n=3)
         else:
             result.append(persistant_dataframe_embedding[typ_key][index])
 
