@@ -5,7 +5,7 @@
 def check_length(key, response_text, i):
     if key == 'DescriptionLongShops':
         if i == 0:
-            return 400 <= (len(response_text) - len("<h2>") - len("</h2><p>") - len("</p>")) <= 525
+            return 400 <= (len(response_text) - len("<h2>") - len("</h2><p>") - len("</p>")) <= 550
         elif i == 1:
             return 300 <= (len(response_text) - len("<h2>") - len("</h2><p>") - len("</p>")) <= 650
         else:
