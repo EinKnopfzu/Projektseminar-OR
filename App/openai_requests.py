@@ -73,7 +73,7 @@ def openai_requests(datenesel, config):
                         presence_penalty=presence_penalty
                     )
                     response_try = response.choices[0].message['content']
-                    if check_html(config["typ"], response_try) and check_length(config["typ"], response_try, i):
+                    if check_html(key, response_try) and check_length(key, response_try, i):
                         break
             
             logging.info('Hauptabfrage ' + key + ': ' + response.choices[0].message['content'])
