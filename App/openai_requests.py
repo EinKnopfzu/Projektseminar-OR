@@ -34,6 +34,7 @@ def openai_requests(datenesel, config):
                 user_prompt = prompts.hauptprompts["user_" + key] + datenesel
 
                 if key != 'MetaKeywordShop':
+                    user_prompt += "\n\nBeispiele:\n"
                     user_prompt += embedding(datenesel, key)
 
 
