@@ -5,7 +5,7 @@ import logging
 import openai
 import routes
 import prompts
-from check_structures import check_html, check_length, check_AmazonBulletPoints
+from check_structures import check_html, check_length, check_AmazonBulletPoints, check_lies
 from config import api_key, model, temperature, max_length, top_p, frequency_penalty, presence_penalty
 from get_embedding import embedding
 
@@ -33,7 +33,7 @@ def openai_requests(datenesel, config):
             dialogue = ""
             user_prompt = ""
 
-            if key not in ('SalesArgument', 'WorthKnowingShop', 'DescriptionLongShops'):
+            if key not in ('SalesArgument', 'WorthKnowingShop', 'DescriptionLongShops', 'TitleAmazon'):
                 system_prompt = prompts.hauptprompts["system_" + key]
                 user_prompt = prompts.hauptprompts["user_" + key] + datenesel #+ "\nBerücksichtige diesen Wunsch bei der Erstellung der Antwort: " + config["product_information"]["UserCustomization"]
 
@@ -84,7 +84,7 @@ def openai_requests(datenesel, config):
                         presence_penalty=presence_penalty
                     )
                     response_try = response.choices[0].message['content']
-                    if check_html(key, response_try) and check_length(key, response_try, i):
+                    if check_html(key, response_try) and check_length(key, response_try, i) and check_lies(datenesel, response_try):
                         break
 
             output = response.choices[0].message['content']
@@ -94,11 +94,11 @@ def openai_requests(datenesel, config):
 
             if chatcompletion_case:
                 outputs.append({"typ": key,
-                                "prompt": "user: " + dialogue.iloc[0]['Inputdata'] + "\n\nassistant: " + dialogue.iloc[0][
-                                    key] + "\n\nuser: " + dialogue.iloc[1]['Inputdata'] + "\n\nassistant: " +
-                                          dialogue.iloc[1][key] + "\n\nuser: " + dialogue.iloc[2][
-                                              'Inputdata'] + "\n\nassistant: " + dialogue.iloc[2][
-                                              key] + "\n\n" + user_prompt,
+                                "prompt": "## SYSTEM:\n" + prompts.hauptprompts["system_" + key] + "\n\n##################################################################################################\n\n## USER:\n" + dialogue.iloc[0]['Inputdata'] + "\n\n## ASSISTANT:\n" + dialogue.iloc[0][
+                                    key] + "\n\n## USER:\n" + dialogue.iloc[1]['Inputdata'] + "\n\n## ASSISTANT:\n" +
+                                          dialogue.iloc[1][key] + "\n\n## USER:\n" + dialogue.iloc[2][
+                                              'Inputdata'] + "\n\n## ASSISTANT:\n" + dialogue.iloc[2][
+                                              key] + "\n\n## USER:\n" + user_prompt,
                                 "response":  output
                                 })
 
