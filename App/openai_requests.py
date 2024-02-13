@@ -5,7 +5,7 @@ import logging
 import openai
 import routes
 import prompts
-from check_structures import check_html, check_length
+from check_structures import check_html, check_length, check_AmazonBulletPoints
 from config import api_key, model, temperature, max_length, top_p, frequency_penalty, presence_penalty
 from get_embedding import embedding
 
@@ -29,9 +29,13 @@ def openai_requests(datenesel, config):
         if (config["generate_selection"][key] == True):
             routes.status_global["Hauptabfrage " + key] = True  # status update
 
+            chatcompletion_case = True
+            dialogue = ""
+            user_prompt = ""
+
             if key not in ('SalesArgument', 'WorthKnowingShop', 'DescriptionLongShops'):
                 system_prompt = prompts.hauptprompts["system_" + key]
-                user_prompt = prompts.hauptprompts["user_" + key] + datenesel
+                user_prompt = prompts.hauptprompts["user_" + key] + datenesel #+ "\nBerücksichtige diesen Wunsch bei der Erstellung der Antwort: " + config["product_information"]["UserCustomization"]
 
                 if key != 'MetaKeywordShop':
                     user_prompt += "\n\nBeispiele:\n"
@@ -50,9 +54,15 @@ def openai_requests(datenesel, config):
                     frequency_penalty=frequency_penalty,
                     presence_penalty=presence_penalty
                 )
+
+                outputs.append({"typ": key,
+                                "prompt": user_prompt,
+                                "response": response.choices[0].message['content']
+                                })
+                chatcompletion_case = False
             else:
                 system_prompt = prompts.hauptprompts["system_" + key]
-                user_prompt = datenesel
+                user_prompt = datenesel #+ "\nBerücksichtige diesen Wunsch bei der Erstellung der Antwort: " + config["product_information"]["UserCustomization"] + " "
                 dialogue = embedding(datenesel, key)
                 for i in range(5):
                     response = openai.ChatCompletion.create(
@@ -76,13 +86,23 @@ def openai_requests(datenesel, config):
                     response_try = response.choices[0].message['content']
                     if check_html(key, response_try) and check_length(key, response_try, i):
                         break
-            
-            logging.info('Hauptabfrage ' + key + ': ' + response.choices[0].message['content'])
 
-            outputs.append({"typ" : key,
-                            "prompt" : user_prompt,
-                            "response" : response.choices[0].message['content']
-                        })
+            output = response.choices[0].message['content']
+            if key == "AmazonBulletPoints":
+                output = check_AmazonBulletPoints(response.choices[0].message['content'])
+
+
+            if chatcompletion_case:
+                outputs.append({"typ": key,
+                                "prompt": "user: " + dialogue.iloc[0]['Inputdata'] + "\n\nassistant: " + dialogue.iloc[0][
+                                    key] + "\n\nuser: " + dialogue.iloc[1]['Inputdata'] + "\n\nassistant: " +
+                                          dialogue.iloc[1][key] + "\n\nuser: " + dialogue.iloc[2][
+                                              'Inputdata'] + "\n\nassistant: " + dialogue.iloc[2][
+                                              key] + "\n\n" + user_prompt,
+                                "response":  output
+                                })
+
+            logging.info('Hauptabfrage ' + key + ': ' + response.choices[0].message['content'])
             routes.status_global["Antwort " + key] = True        # status update
 
         else:

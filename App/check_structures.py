@@ -29,3 +29,6 @@ def check_html(key, response_text):
         return ((response_text.startswith("<h2>"))
             and ("</h2><p>" in response_text)
             and (response_text.endswith("</p>")))
+
+def check_AmazonBulletPoints(bullet_text):
+    return bullet_text[7:-3]

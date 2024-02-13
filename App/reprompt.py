@@ -34,7 +34,7 @@ def reprompt_request(config):
 
     # random_dialogue = pd.read_csv("preprocessed_embeddings.csv").sample(n=1).iloc[0]
     
-    if config["typ"] in ('SalesArgument', 'WorthKnowingShop', 'DescriptionLongShops'):
+    if config["typ"] in ('DescriptionLongShops'):
         for i in range(5):
             response = openai.ChatCompletion.create(
                 model=model,
@@ -56,7 +56,7 @@ def reprompt_request(config):
             response_try = response.choices[0].message['content']
             if (check_html(config["typ"], response_try) == True):
                 break
-    elif config["typ"] not in ('SalesArgument', 'WorthKnowingShop', 'DescriptionLongShops'):
+    else:
         response = openai.ChatCompletion.create(
             model=model,
             messages=[

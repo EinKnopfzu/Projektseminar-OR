@@ -12,7 +12,6 @@ openai.api_key = api_key
 
 def generate_product_features(user_input):
 
-
     temperature = user_input["llm_settings"]["temperature"]
     max_tokens = user_input["llm_settings"]["max_tokens"]
     top_p = user_input["llm_settings"]["top_p"]
@@ -23,7 +22,7 @@ def generate_product_features(user_input):
         logging.info('LLAMA ist noch nicht angebunden')                 #Killswitch nicht implemented yet
         exit(0)
 
-    input = user_input["product_information"]["TitlePlain"] + " // Lieferumfang: " + " / ".join(user_input["product_information"]["DeliveryContents"]) + " // " + " / ".join(user_input["product_information"]["UserInstructions"]) + " // "
+    input = user_input["product_information"]["TitlePlain"] + " // Lieferumfang: " + " / ".join(user_input["product_information"]["DeliveryContents"]) + " // " + " / ".join(user_input["product_information"]["UserInstructions"])
 
     routes.status_global["Daten vorverarbeitet"] = True                 # status update
 

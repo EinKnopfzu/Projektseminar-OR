@@ -4,6 +4,7 @@ from datenesel import refine_product_features
 from openai_requests import openai_requests
 from reprompt import reprompt_request
 import logging
+import reset_status
 from threading import Lock
 
 
@@ -38,9 +39,9 @@ def create_routes(app):
 
     @app.route('/generate', methods = ['POST'])
     def generate():
+        reset_status.reset()
         config = request.json
         logging.info('Generate-Config: ' + str(config))
-
         generate_res = generate_product_features(config)
         datenesel = refine_product_features(generate_res["output"], generate_res["input"])
         return openai_requests(datenesel, config)
