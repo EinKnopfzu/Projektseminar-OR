@@ -38,8 +38,8 @@ def embedding(datenesel, typ_key):
     result = []
     for index in range(0,3):
         if typ_key == 'AmazonBulletPoints':
-            result.append("<ul><li>" + persistant_dataframe_embedding["AmazonBulletPoint1"][index] + "</li><li>" + persistant_dataframe_embedding["AmazonBulletPoint2"][index] + "</li><li>" + persistant_dataframe_embedding["AmazonBulletPoint3"][index] + "</li><li>" + persistant_dataframe_embedding["AmazonBulletPoint4"][index] + "</li><li>" + persistant_dataframe_embedding["AmazonBulletPoint5"][index] + "</li></ul>")
-        elif typ_key in ('SalesArgument', 'WorthKnowingShop', 'DescriptionLongShops', 'TitleAmazon'):
+            return persistant_dataframe_embedding.assign(AmazonBulletPoints=persistant_dataframe_embedding[['AmazonBulletPoint1', 'AmazonBulletPoint2', 'AmazonBulletPoint3', 'AmazonBulletPoint4', 'AmazonBulletPoint5']].agg('\n'.join, axis=1))[['Inputdata', 'AmazonBulletPoints']].head(5).sample(n=3)
+        elif typ_key in ('SalesArgument', 'WorthKnowingShop', 'DescriptionLongShops', 'TitleAmazon', 'MetaKeywordShop'):
             return persistant_dataframe_embedding[['Inputdata', typ_key]].head(5).sample(n=3)
         else:
             result.append(persistant_dataframe_embedding[typ_key][index])

@@ -22,8 +22,9 @@ def openai_requests(datenesel, config):
     presence_penalty = config["llm_settings"]["presence_penalty"]
 
     outputs = []
+    
     #set settings for Openai API calls
-
+    
     for key in config["generate_selection"].keys():
 
         if (config["generate_selection"][key] == True):
@@ -33,15 +34,11 @@ def openai_requests(datenesel, config):
             dialogue = ""
             user_prompt = ""
 
-            if key not in ('SalesArgument', 'WorthKnowingShop', 'DescriptionLongShops', 'TitleAmazon'):
+
+            
+            if key not in ('SalesArgument', 'WorthKnowingShop', 'DescriptionLongShops', 'TitleAmazon', 'AmazonBulletPoints', 'MetaKeywordShop'):
                 system_prompt = prompts.hauptprompts["system_" + key]
                 user_prompt = prompts.hauptprompts["user_" + key] + datenesel #+ "\nBerücksichtige diesen Wunsch bei der Erstellung der Antwort: " + config["product_information"]["UserCustomization"]
-
-                if key != 'MetaKeywordShop':
-                    user_prompt += "\n\nBeispiele:\n"
-                    user_prompt += embedding(datenesel, key)
-
-
                 response = openai.ChatCompletion.create(
                     model=model,
                     messages=[
@@ -54,12 +51,14 @@ def openai_requests(datenesel, config):
                     frequency_penalty=frequency_penalty,
                     presence_penalty=presence_penalty
                 )
-
                 outputs.append({"typ": key,
                                 "prompt": user_prompt,
                                 "response": response.choices[0].message['content']
                                 })
                 chatcompletion_case = False
+                
+
+            
             else:
                 system_prompt = prompts.hauptprompts["system_" + key]
                 user_prompt = datenesel #+ "\nBerücksichtige diesen Wunsch bei der Erstellung der Antwort: " + config["product_information"]["UserCustomization"] + " "
@@ -87,28 +86,33 @@ def openai_requests(datenesel, config):
                     if check_html(key, response_try) and check_length(key, response_try, i) and check_lies(datenesel, response_try):
                         break
 
+
+        
             output = response.choices[0].message['content']
-            if key == "AmazonBulletPoints":
-                output = check_AmazonBulletPoints(response.choices[0].message['content'])
 
 
+            
             if chatcompletion_case:
                 outputs.append({"typ": key,
-                                "prompt": "## SYSTEM:\n" + prompts.hauptprompts["system_" + key] + "\n\n##################################################################################################\n\n## USER:\n" + dialogue.iloc[0]['Inputdata'] + "\n\n## ASSISTANT:\n" + dialogue.iloc[0][
-                                    key] + "\n\n## USER:\n" + dialogue.iloc[1]['Inputdata'] + "\n\n## ASSISTANT:\n" +
-                                          dialogue.iloc[1][key] + "\n\n## USER:\n" + dialogue.iloc[2][
-                                              'Inputdata'] + "\n\n## ASSISTANT:\n" + dialogue.iloc[2][
-                                              key] + "\n\n## USER:\n" + user_prompt,
+                                "prompt": "## SYSTEM:\n" + prompts.hauptprompts["system_" + key] + "\n\n##################################################################################################" +
+                                    "\n\n## USER:\n" + dialogue.iloc[0]['Inputdata'] + "\n\n## ASSISTANT:\n" + dialogue.iloc[0][key] +
+                                    "\n\n## USER:\n" + dialogue.iloc[1]['Inputdata'] + "\n\n## ASSISTANT:\n" + dialogue.iloc[1][key] + 
+                                    "\n\n## USER:\n" + dialogue.iloc[2]['Inputdata'] + "\n\n## ASSISTANT:\n" + dialogue.iloc[2][key] + 
+                                    "\n\n## USER:\n" + user_prompt + "\n\n## ASSISTANT:",
                                 "response":  output
                                 })
 
             logging.info('Hauptabfrage ' + key + ': ' + response.choices[0].message['content'])
             routes.status_global["Antwort " + key] = True        # status update
 
+        
+        
         else:
             routes.status_global["Hauptabfrage " + key] = False  # status update
             routes.status_global["Antwort " + key] = False
             logging.info('Hauptabfrage ' + key + ': not selected')
 
+
+    
     return json.dumps(outputs)
 

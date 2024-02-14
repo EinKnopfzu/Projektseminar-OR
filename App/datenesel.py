@@ -4,7 +4,7 @@ import logging
 import routes
 import prompts
 import random
-from check_structures import check_html, check_length, check_AmazonBulletPoints, check_lies
+from check_structures import check_lies
 from config import api_key, model, temperature, max_length, top_p, frequency_penalty, presence_penalty
 
 # Konfiguration für den OpenAI GPT-3.5 Aufruf in config
@@ -72,7 +72,7 @@ def refine_product_features(combined_outputs, input):
             frequency_penalty=frequency_penalty,
             presence_penalty=presence_penalty
         )
-        if check_lies(input, response.choices[0].message['content']):
+        if check_lies(input, response.choices[0].message['content']) and response.choices[0].message['content'].count("/") >= 9:
             break
             
     logging.info('Datenesel erstellt: ' + input + response.choices[0].message['content'])
