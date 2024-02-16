@@ -2,8 +2,8 @@ import { Component } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { HttpHeaders } from '@angular/common/http';
 import { delay } from 'rxjs/operators';
-import { NgbNavModule } from '@ng-bootstrap/ng-bootstrap';
 import { interval } from 'rxjs';
+import { DatePipe } from '@angular/common';
 
 type MessageArray = { llm_bot: boolean, timestamp: string, message: string, prompt?: string }[]
 type HTTP_LLM_Response = { typ: string, prompt: string, response: string }
@@ -36,10 +36,11 @@ export interface ProductInformation { select_for_generate: boolean, display_name
   styleUrls: ['./app.component.css']
 })
 export class AppComponent {
-  constructor(private http: HttpClient) {
+  constructor(
+    private http: HttpClient,
+    private datePipe: DatePipe
+  ) {
     interval(1000).subscribe(() => { // will execute every second
-      console.log("Test")
-
       this.http.get<HTTP_Status_Response>('http://127.0.0.1:5000/status').subscribe(response => {
         for (const [key, value] of Object.entries(response)) {
           this.backend_status[key] = value
@@ -73,7 +74,7 @@ export class AppComponent {
   direct_chat_messages_array: MessageArray = [
     {
       llm_bot: true,
-      timestamp: "23 Jan 2:00 pm",
+      timestamp: this.datePipe.transform(new Date(), 'dd. MMM HH:mm') || "",
       message: "Hallo, ich bin Ihr persönlicher LLM-Assistent für die Erstellung von Produktbeschreibungen. Bitte füllen Sie oben das Formular mit den Produktmerkmalen aus und senden Sie anschließend eine Anfrage zur Generierung der Produktbeschreibung, indem Sie auf die Schaltfläche „Produktbeschreibung generieren“ klicken."
     }
   ]
@@ -205,7 +206,7 @@ export class AppComponent {
       if(value.select_for_generate) {
         this.product_info_dict[key].message_array.push({
           llm_bot: false,
-          timestamp: "23 Jan 2:00 pm",
+          timestamp: this.datePipe.transform(new Date(), 'dd. MMM HH:mm') || "",
           message: `Generiere ${value.display_name} für die oben definierten Produktdaten.`
         })
       }
@@ -230,7 +231,7 @@ export class AppComponent {
             // match product id of response to product_info_array and push response to message_array
             this.product_info_dict[llmResponse.typ].message_array.push({
               llm_bot: true,
-              timestamp: "23 Jan 2:00 pm",
+              timestamp: this.datePipe.transform(new Date(), 'dd. MMM HH:mm') || "",
               message: llmResponse.response,
               prompt: llmResponse.prompt
             })
@@ -245,7 +246,7 @@ export class AppComponent {
           // match product typ of response to product_info_array and push response to message_array
           this.product_info_dict[llmResponse.typ].message_array.push({
             llm_bot: true,
-            timestamp: "23 Jan 2:00 pm",
+            timestamp: this.datePipe.transform(new Date(), 'dd. MMM HH:mm') || "",
             message: llmResponse.response,
             prompt: llmResponse.prompt
           })
@@ -288,7 +289,7 @@ export class AppComponent {
     // push new user message to message array containing the instruction
     this.product_info_dict[typ].message_array.push({
       llm_bot: false,
-      timestamp: "23 Jan 2:00 pm",
+      timestamp: this.datePipe.transform(new Date(), 'dd. MMM HH:mm') || "",
       message: `Verbessere den vorherigen Prompt mittels der Anweisung: "${instruction}"`
     })
 
@@ -298,7 +299,7 @@ export class AppComponent {
       // push response to message_array
       this.product_info_dict[llmResponse.typ].message_array.push({
         llm_bot: true,
-        timestamp: "23 Jan 2:00 pm",
+        timestamp: this.datePipe.transform(new Date(), 'dd. MMM HH:mm') || "",
         message: llmResponse.response,
         prompt: llmResponse.prompt
       })
